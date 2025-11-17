@@ -9,6 +9,8 @@ import java.util.Scanner;
     5. Useable items, maybe selling fish
 
 
+    Also clean up UI
+
 
 
 */
