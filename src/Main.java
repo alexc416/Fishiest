@@ -31,17 +31,36 @@ public class Main {
                 int inp = _scan.nextInt();
 
                 if (inp == 1) {
-                    System.out.println(spacer);
-                    System.out.println("you casted a lure");
-                } else if (inp == 2) {
                     screen = 2;
+                } else if (inp == 2) {
+                    screen = 3;
                 }
-
 
                 if (inp == 0) {
                     Playing = false;
                 }
+
             } else if (screen == 2) {
+                System.out.println(spacer);
+                int fish = user.catchFish();
+                int difficulty = 1;
+                boolean catching = true;
+                int distance = (int) (Math.random() * (difficulty * 100));
+                //placeholder for now, until adding luck
+                System.out.println("You have a fish on the line at distance " + distance + " do you wish to \n1. Pull it out of the water! \n2. Start reeling it in \n3. Give it some more line");
+                if (catching) {
+                    int inp = _scan.nextInt();
+
+
+
+
+                }
+
+
+
+
+
+            } else if (screen == 3) {
                 //Accessing inventory
                 user.inventoryCheck();
                 System.out.println(spacer);
@@ -52,7 +71,6 @@ public class Main {
                     screen = 1;
                 } else {
                     user.useItem(inp);
-                    screen = 1;
                 }
             }
         }

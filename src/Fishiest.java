@@ -9,9 +9,11 @@ public class Fishiest {
 
     }
 
-    public void castLure() {
-
-
+    public int catchFish() {
+        System.out.println("-------------------------------------------------------------------------------");
+        //need to think about luck system and how to integrate
+        int caughtFish = (int) (Math.random()*10);
+        return caughtFish;
     }
 
     public void inventoryCheck() {
@@ -26,6 +28,7 @@ public class Fishiest {
             System.out.println(userInv.get(i)[0] + " " + userInv.get(i)[1]);
         }
     }
+
     public void useItem(int ind) {
         String item = userInv.get(ind-1)[1];
         if (item.equals("Fish")) {
@@ -36,7 +39,6 @@ public class Fishiest {
             System.out.println("Debug, item not included");
         }
 
-        //Seems to keep doubling inventory for some reason lmao
         String[] updatedItem = new String[] {String.valueOf(Integer.parseInt(userInv.get(ind-1)[0]) - 1), userInv.get(ind-1)[1]};
         userInv.remove(ind+1);
         userInv.add(ind+1, updatedItem);
