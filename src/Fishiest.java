@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Fishiest {
     private int userLuck = 5;
-    private int userStrength = 1;
+    private int fishCaught = 0;
     private ArrayList<String[]> userInv = new ArrayList<>();
 
     public Fishiest() {
@@ -14,6 +14,25 @@ public class Fishiest {
         //need to think about luck system and how to integrate
         int caughtFish = (int) (Math.random()*10);
         return caughtFish;
+    }
+
+    public void fishGraphic(int dis, int attracted) {
+        System.out.println("         o      ");
+        System.out.println("       / []      ");
+        System.out.println("      |  ||       ");
+        System.out.println("         ----------");
+        for (int i = 0; i < dis; i++) {
+            System.out.println("      :            ");
+        }
+        if (attracted >= 5) {
+            System.out.println("      :<<--         ");
+        } else {
+            System.out.print("      :");
+            for (int i = 0; i <= attracted; i++) {
+                System.out.print("   ");
+            }
+            System.out.println("<<--");
+        }
     }
 
     public void inventoryCheck() {
@@ -43,4 +62,10 @@ public class Fishiest {
         userInv.remove(ind+1);
         userInv.add(ind+1, updatedItem);
     }
+
+    public void statCheck() {
+        System.out.println("Luck: " + userLuck);
+        System.out.println("Fish Caught: " + fishCaught);
+    }
+
 }

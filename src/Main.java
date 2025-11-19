@@ -21,12 +21,11 @@ public class Main {
         Fishiest user = new Fishiest();
         int screen = 1;
 
-
         System.out.println("Welcome to Fishiest, the worlds best fishing game in the command line");
         while (Playing) {
             if (screen == 1) {
                 System.out.println(spacer);
-                System.out.println("Hello what would you like to do \n1. Cast lure \n2. Access items\n3. blah blah");
+                System.out.println("Hello what would you like to do \n1. Cast lure \n2. Access items\n3. Check stats");
                 int inp = _scan.nextInt();
 
                 if (inp == 1) {
@@ -36,6 +35,8 @@ public class Main {
                     System.out.println("(HINT!: Giving the fish line is always a safe option, you want to have a balence between reeling and giving, untill finaly pulling it out of the water when you think you closed the distance, yet also have the fish intrested)");
                 } else if (inp == 2) {
                     screen = 3;
+                } else if (inp == 3) {
+                    user.statCheck();
                 }
 
                 if (inp == 0) {
@@ -43,17 +44,29 @@ public class Main {
                 }
 
             } else if (screen == 2) {
+                /*
+                Changing Attraction and distance
+                The idea is that Attraction is on a scale of 0-10, and distance is random
+                The difficulty is going to be 1-5 on rarities
+
+                Every turn if you give line, you have a chance based on the difficulty if you lose attraction or gain, more so you should gain
+                If you reel it in then you have a chance based on the difficulty if you lose attraction or gain, riskier than giving line, and
+
+                When you reel in a random num is generated 1-100
+                A base line is going to be generated from the distance, and fish attraction
+                if the num is greater than the baseline, you succesfully reel in, otherwise you dont
+
+                */
                 int fishCaught = user.catchFish();
 
                 int difficulty = 5;
-                //difficulty is going to be based on difficulty of fish and affects the necessary fish attraction and range 3 5 7 10
                 int distance = (int) (Math.random()*10)+5;
                 int fishAtraction = 1;
-                boolean catching = true;
-                //placeholder for now, until adding luck
 
-                //1 is pull out, 2 is reel in, 3 is give line
+                boolean catching = true;
+
                 while (catching) {
+                    user.fishGraphic(distance, fishAtraction);
                     int inp = _scan.nextInt();
                     if (inp == 1) {
                         if (fishAtraction > difficulty && distance < 10) {
@@ -66,12 +79,18 @@ public class Main {
                             }
                         }
                         catching = false;
+                        screen = 1;
                     } else if (inp == 2) {
                         int reelRoll = (int) (Math.random()*26);
                         if (reelRoll > difficulty) {
                             System.out.println("You reeled in the fish closer.");
                             distance -= 5;
                             fishAtraction += 2;
+
+                            System.out.println("What do you wish to do next? \n1. Pull it out of the water! \n2. Start reeling it in \n3. Give it some more line");
+                            System.out.println("Fish Intrestedness: " + fishAtraction);
+                            System.out.println("Fish Distance: " + distance);
+                            //might replace this with less descriptive message later
                         } else {
                             System.out.println("The fish pulled away and let go!");
                             catching = false;
@@ -81,10 +100,12 @@ public class Main {
                         System.out.println("You gave the fish some more line.");
                         fishAtraction += 2;
                         distance += 3;
-                    }
 
-                    System.out.println("What do you wish to do next? \n1. Pull it out of the water! \n2. Start reeling it in \n3. Give it some more line");
-                    System.out.println();
+                        System.out.println("What do you wish to do next? \n1. Pull it out of the water! \n2. Start reeling it in \n3. Give it some more line");
+                        System.out.println("Fish Intrestedness: " + fishAtraction);
+                        System.out.println("Fish Distance: " + distance);
+
+                    }
                 }
 
             } else if (screen == 3) {
