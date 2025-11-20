@@ -20,11 +20,11 @@ public class Fishiest {
         System.out.println("         o      ");
         System.out.println("       / []      ");
         System.out.println("      |  ||       ");
-        System.out.println("         ----------");
+        System.out.println("      :  ----------");
         for (int i = 0; i < dis; i++) {
             System.out.println("      :            ");
         }
-        if (attracted >= 5) {
+        if (attracted >= 10) {
             System.out.println("      :<<--         ");
         } else {
             System.out.print("      :");
