@@ -1,9 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Fishiest {
     private int userLuck = 5;
     private int fishCaught = 0;
-    private ArrayList<String[]> userInv = new ArrayList<>();
+    private HashMap<String, Integer> userInv = new HashMap<>() {{
+        put("Bait", 10);
+        put("Salmon", 10);
+    }};
+    
 
     public Fishiest() {
 
@@ -36,31 +41,34 @@ public class Fishiest {
     }
 
     public void inventoryCheck() {
-        userInv.add(new String[]{"1", "Fish"});
-        userInv.add(new String[]{"2", "Not Fish"});
-        userInv.add(new String[]{"3", "Bait"});
         System.out.println("-------------------------------------------------------------------------------");
         System.out.println("You have ");
 
+        String[] userInvItems = userInv.keySet().toArray(new String[0]);
+        Integer[] userInvCounts = userInv.values().toArray(new Integer[0]);
         for (int i = 0; i < userInv.size(); i++) {
             System.out.print((i+1) + ") ");
-            System.out.println(userInv.get(i)[0] + " " + userInv.get(i)[1]);
+            System.out.println(userInvCounts[i] + " " + userInvItems[i]);
         }
     }
 
     public void useItem(int ind) {
-        String item = userInv.get(ind-1)[1];
-        if (item.equals("Fish")) {
-            System.out.println("You can't do anything with the fish");
-        } else if (item.equals("Bait")) {
-            System.out.println("You used Bait, your luck has increased");
-        } else {
-            System.out.println("Debug, item not included");
+        String item = userInv.keySet().toArray(new String[0])[ind-1];
+        switch (item) {
+            case "Bait":
+                System.out.println("You used Bait. Your luck increased!");
+                break;
+            case "Salmon":
+                System.out.println("You ate the Salmon. Your luck increased!");
+                break;
+            default:
+                System.out.println("Debug: item not included");
+                break;
         }
-
-        String[] updatedItem = new String[] {String.valueOf(Integer.parseInt(userInv.get(ind-1)[0]) - 1), userInv.get(ind-1)[1]};
-        userInv.remove(ind+1);
-        userInv.add(ind+1, updatedItem);
+        userInv.put(item, userInv.get(item)-1);
+        if (userInv.get(item) <= 0) {
+            userInv.remove(item);
+        }
     }
 
     public void statCheck() {
