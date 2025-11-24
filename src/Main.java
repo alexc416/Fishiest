@@ -56,7 +56,7 @@ public class Main {
                 If you reel it in then you have a chance based on the difficulty if you lose attraction or gain, riskier than giving line, and
 
                 */
-                int fishCaught = user.catchFish();
+                String fishCaught = user.catchFish();
 
                 int distance = (int) (Math.random()*8)+3;
 

@@ -8,18 +8,53 @@ public class Fishiest {
         put("Bait", 10);
         put("Salmon", 10);
     }};
-    
+
+    private ArrayList<ArrayList<String>> fishCatalog = new ArrayList<>() {{
+        add(new ArrayList<>() {{ add("Common"); add("Boot"); }});
+        add(new ArrayList<>() {{ add("Common"); add("Cod"); }});
+        add(new ArrayList<>() {{ add("Common"); add("Salmon"); }});
+        add(new ArrayList<>() {{ add("Rare"); add("Eel"); }});
+        add(new ArrayList<>() {{ add("Epic"); add("Swordfish"); }});
+        add(new ArrayList<>() {{ add("Legendary"); add("Leviathan"); }});
+    }};
 
     public Fishiest() {
 
     }
 
-    public int catchFish() {
+    public String catchFish() {
         System.out.println("-------------------------------------------------------------------------------");
-        //need to think about luck system and how to integrate
-        int caughtFish = (int) (Math.random()*10);
+
+        ArrayList<String> fishPool = new ArrayList<>();
+
+        for (ArrayList<String> entry : fishCatalog) {
+            String rarity = entry.get(0);
+            String fishName = entry.get(1);
+
+            int weight = switch (rarity) {
+                case "Common" -> 8;
+                case "Rare" -> 4;
+                case "Epic" -> 2;
+                case "Legendary" -> 1;
+                default -> 1;
+            };
+
+            // Add fish to pool based on weight
+            for (int i = 0; i < weight; i++) {
+                fishPool.add(fishName);
+            }
+        }
+
+        // Randomly choose fish
+        String caughtFish = fishPool.get((int)(Math.random() * fishPool.size()));
+
+        System.out.println("Caught fish " + caughtFish);
+        System.out.println("Debug " + fishPool);
+
         return caughtFish;
     }
+
+
 
     public void fishGraphic(int dis, int attracted) {
         System.out.println("         o      ");
@@ -33,7 +68,7 @@ public class Fishiest {
             System.out.println("      :<<--         ");
         } else {
             System.out.print("      :");
-            for (int i = 0; i <= attracted; i++) {
+            for (int i = 10; i >= attracted; i--) {
                 System.out.print("   ");
             }
             System.out.println("<<--");
