@@ -2,19 +2,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Fishiest {
-    private int userLuck = 5;
+    private int userLuck = 1;
     private int fishCaught = 0;
     private HashMap<String, Integer> userInv = new HashMap<>() {{
         put("Bait", 10);
-        put("Salmon", 10);
     }};
 
     private ArrayList<ArrayList<String>> fishCatalog = new ArrayList<>() {{
         add(new ArrayList<>() {{ add("Common"); add("Boot"); }});
         add(new ArrayList<>() {{ add("Common"); add("Cod"); }});
         add(new ArrayList<>() {{ add("Common"); add("Salmon"); }});
+        add(new ArrayList<>() {{ add("Common"); add("Trout"); }}); 
+        add(new ArrayList<>() {{ add("Rare"); add("Catfish"); }});
+        add(new ArrayList<>() {{ add("Rare"); add("Carp"); }});
         add(new ArrayList<>() {{ add("Rare"); add("Eel"); }});
         add(new ArrayList<>() {{ add("Epic"); add("Swordfish"); }});
+        add(new ArrayList<>() {{ add("Epic"); add("Shark"); }});
+        add(new ArrayList<>() {{ add("Legendary"); add("Kraken"); }});
         add(new ArrayList<>() {{ add("Legendary"); add("Leviathan"); }});
     }};
 
@@ -22,7 +26,7 @@ public class Fishiest {
 
     }
 
-    public String catchFish() {
+    public String[] catchFish() {
         System.out.println("-------------------------------------------------------------------------------");
 
         ArrayList<String> fishPool = new ArrayList<>();
@@ -46,12 +50,18 @@ public class Fishiest {
         }
 
         // Randomly choose fish
-        String caughtFish = fishPool.get((int)(Math.random() * fishPool.size()));
+        String caughtFish = fishPool.get((int)(Math.random() * fishPool.size()) + userLuck);
 
-        System.out.println("Caught fish " + caughtFish);
-        System.out.println("Debug " + fishPool);
+        String rarity = "";
+        for (ArrayList<String> entry : fishCatalog) {
+            if (entry.get(1).equals(caughtFish)) {
+                rarity = entry.get(0);
+                break;
+            }
+        }
 
-        return caughtFish;
+        String[] result = {caughtFish, rarity};
+        return result;
     }
 
 
@@ -69,7 +79,7 @@ public class Fishiest {
         } else {
             System.out.print("      :");
             for (int i = 10; i >= attracted; i--) {
-                System.out.print("   ");
+                System.out.print("  ");
             }
             System.out.println("<<--");
         }
@@ -87,14 +97,21 @@ public class Fishiest {
         }
     }
 
+    public void addFish(String itemName) {
+        if (userInv.containsKey(itemName)) {
+            userInv.put(itemName, userInv.get(itemName) + 1);
+        } else {
+            userInv.put(itemName, 1);
+        }
+        fishCaught += 1;
+    }
+
     public void useItem(int ind) {
         String item = userInv.keySet().toArray(new String[0])[ind-1];
         switch (item) {
             case "Bait":
                 System.out.println("You used Bait. Your luck increased!");
-                break;
-            case "Salmon":
-                System.out.println("You ate the Salmon. Your luck increased!");
+                userLuck += 2;
                 break;
             default:
                 System.out.println("Debug: item not included");
